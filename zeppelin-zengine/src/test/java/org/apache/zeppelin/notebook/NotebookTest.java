@@ -456,7 +456,7 @@ public class NotebookTest extends AbstractInterpreterTest implements JobListener
     // create a cron scheduled note.
     Note cronNote = notebook.createNote(anonymous);
     interpreterSettingManager.setInterpreterBinding(anonymous.getUser(), cronNote.getId(),
-            Arrays.asList("mock1"));
+            Arrays.asList(interpreterSettingManager.getInterpreterSettingByName("mock1").getId()));
     cronNote.setConfig(new HashMap() {
       {
         put("cron", "1/5 * * * * ?");
@@ -478,7 +478,7 @@ public class NotebookTest extends AbstractInterpreterTest implements JobListener
     // create another note
     Note anotherNote = notebook.createNote(anonymous);
     interpreterSettingManager.setInterpreterBinding(anonymous.getUser(), anotherNote.getId(),
-            Arrays.asList("mock2"));
+            Arrays.asList(interpreterSettingManager.getInterpreterSettingByName("mock2").getId()));
     RemoteInterpreter anotherNoteInterpreter =
             (RemoteInterpreter) interpreterFactory.getInterpreter(anonymous.getUser(),
                     anotherNote.getId(), "mock2");
