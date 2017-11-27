@@ -578,6 +578,10 @@ public class ZeppelinConfiguration extends XMLConfiguration {
     return configurations;
   }
 
+  public String getNotebookQuartzPropPath() {
+    return getString(ConfVars.ZEPPELIN_NOTEBOOK_QUARTZ_PROP_PATH);
+  }
+
   /**
    * Predication whether key/value pair should be included or not
    */
@@ -662,6 +666,7 @@ public class ZeppelinConfiguration extends XMLConfiguration {
     ZEPPELIN_NOTEBOOK_HOMESCREEN("zeppelin.notebook.homescreen", null),
     // whether homescreen notebook will be hidden from notebook list or not
     ZEPPELIN_NOTEBOOK_HOMESCREEN_HIDE("zeppelin.notebook.homescreen.hide", false),
+    ZEPPELIN_NOTEBOOK_QUARTZ_PROP_PATH("zeppelin.notebook.quartz.prop.path", ""),
     ZEPPELIN_NOTEBOOK_S3_BUCKET("zeppelin.notebook.s3.bucket", "zeppelin"),
     ZEPPELIN_NOTEBOOK_S3_ENDPOINT("zeppelin.notebook.s3.endpoint", "s3.amazonaws.com"),
     ZEPPELIN_NOTEBOOK_S3_USER("zeppelin.notebook.s3.user", "user"),

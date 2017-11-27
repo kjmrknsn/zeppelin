@@ -34,6 +34,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Sets;
+import org.apache.commons.lang.StringUtils;
 import org.apache.zeppelin.interpreter.*;
 import org.apache.zeppelin.interpreter.remote.RemoteAngularObjectRegistry;
 import org.quartz.CronScheduleBuilder;
@@ -79,7 +80,7 @@ public class Notebook implements NoteEventListener {
   private final Map<String, Note> notes = new LinkedHashMap<>();
   private final FolderView folders = new FolderView();
   private ZeppelinConfiguration conf;
-  private StdSchedulerFactory quertzSchedFact;
+  private StdSchedulerFactory quartzSchedFact;
   private org.quartz.Scheduler quartzSched;
   private JobListenerFactory jobListenerFactory;
   private NotebookRepo notebookRepo;
@@ -110,8 +111,13 @@ public class Notebook implements NoteEventListener {
     this.noteSearchService = noteSearchService;
     this.notebookAuthorization = notebookAuthorization;
     this.credentials = credentials;
-    quertzSchedFact = new org.quartz.impl.StdSchedulerFactory();
-    quartzSched = quertzSchedFact.getScheduler();
+    String quartzPropPath = conf.getNotebookQuartzPropPath();
+    if (StringUtils.isNotEmpty(quartzPropPath)) {
+      quartzSchedFact = new org.quartz.impl.StdSchedulerFactory(quartzPropPath);
+    } else {
+      quartzSchedFact = new org.quartz.impl.StdSchedulerFactory();
+    }
+    quartzSched = quartzSchedFact.getScheduler();
     quartzSched.start();
     CronJob.notebook = this;
 
